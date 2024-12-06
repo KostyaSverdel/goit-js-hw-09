@@ -1,8 +1,13 @@
 import Notiflix from 'notiflix';
+const refs = {
+  step: document.querySelector('input[name="step"]'),
+  amount: document.querySelector('input[name="amount"]'),
+  btnCreatePromise: document.querySelector('button[type="submit"]'),
+};
+
 const delay = document.querySelector('input[name="delay"]');
-const step = document.querySelector('input[name="step"]');
-const amount = document.querySelector('input[name="amount"]');
-const btnCreatePromise = document.querySelector('button[type="submit"]');
+
+refs.btnCreatePromise.addEventListener('click', startBtnCreatePromise);
 
 function createPromise(position, delay) {
   const promise = new Promise((resolve, reject) => {
@@ -18,11 +23,11 @@ function createPromise(position, delay) {
   return promise;
 }
 
-btnCreatePromise.addEventListener('click', e => {
-  e.preventDefault();
+function startBtnCreatePromise(event) {
+  event.preventDefault();
   let firstDelay = Number(delay.value);
-  let delayStep = Number(step.value);
-  for (let i = 0; i < amount.value; i++) {
+  let delayStep = Number(refs.step.value);
+  for (let i = 0; i < refs.amount.value; i++) {
     createPromise(1 + i, firstDelay + i * delayStep)
       .then(({ position, delay }) => {
         Notiflix.Notify.success(
@@ -35,4 +40,4 @@ btnCreatePromise.addEventListener('click', e => {
         );
       });
   }
-});
+}
